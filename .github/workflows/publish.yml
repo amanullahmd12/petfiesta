@@ -19,23 +19,32 @@ jobs:
       - name: Build
         run: npm run build # The build command of your project
 
-      - name: Verify build directory
+      - name: Log build process
         run: |
-          if [ -d "build" ]; then
-            echo "Build directory exists."
+          echo "Listing current directory contents:"
+          ls -la
+          echo "Listing contents of dist directory if exists:"
+          if [ -d "dist" ]; then
+            ls -la dist
           else
-            echo "Build directory does not exist."
+            echo "dist directory does not exist."
+          fi
+
+      - name: Verify dist directory
+        run: |
+          if [ -d "dist" ]; then
+            echo "dist directory exists."
+          else
+            echo "dist directory does not exist."
             exit 1
           fi
 
-      - name: List build directory contents
-        run: ls -la build
-
       - name: Push to build branch
+        if: success()
         uses: s0/git-publish-subdir-action@develop
         env:
           REPO: self
           BRANCH: build # The branch name where you want to push the assets
-          FOLDER: build # The directory where your assets are generated
+          FOLDER: dist # The directory where your assets are generated
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub will automatically add this - you don't need to bother getting a token
           MESSAGE: "Build: ({sha}) {msg}" # The commit message
