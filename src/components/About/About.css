@@ -1,0 +1,28 @@
+.about{
+    background-image: url('../../assets/puppy.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100dvh;
+  
+}
+
+.about .container{
+    height: 100dvh;
+}
+
+
+.about .container h1{
+        font-family: "Pacifico", cursive;
+        font-weight: 900;
+        font-size: 4rem;
+        
+}
+
+
+@media (max-width: 480px){
+
+
+    .about .container h1{
+        font-size: 3rem;
+}
+}
